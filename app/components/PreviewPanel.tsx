@@ -1,28 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
 interface PreviewPanelProps {
   html: string;
   isLoading?: boolean;
 }
 
 export function PreviewPanel({ html, isLoading = false }: PreviewPanelProps) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
-  useEffect(() => {
-    if (iframeRef.current && html) {
-      const iframe = iframeRef.current;
-      const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-
-      if (iframeDoc) {
-        iframeDoc.open();
-        iframeDoc.write(html);
-        iframeDoc.close();
-      }
-    }
-  }, [html]);
-
   return (
     <div className="relative h-full w-full bg-white dark:bg-gray-950">
       {isLoading && (
@@ -80,13 +63,15 @@ export function PreviewPanel({ html, isLoading = false }: PreviewPanelProps) {
         </div>
       )}
 
-      <iframe
-        ref={iframeRef}
-        title="Preview"
-        sandbox="allow-scripts"
-        className="h-full w-full border-0"
-        style={{ display: html ? "block" : "none" }}
-      />
+      {html && (
+        <iframe
+          key={html}
+          title="Preview"
+          srcDoc={html}
+          sandbox="allow-scripts allow-same-origin"
+          className="h-full w-full border-0"
+        />
+      )}
     </div>
   );
 }
