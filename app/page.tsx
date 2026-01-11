@@ -1,11 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import {
-  Panel,
-  Group,
-  Separator,
-} from "react-resizable-panels";
+import { Panel, Group, Separator } from "react-resizable-panels";
 import { CodeEditor } from "./components/CodeEditor";
 import { PreviewPanel } from "./components/PreviewPanel";
 import { ErrorDisplay } from "./components/ErrorDisplay";
@@ -17,7 +13,10 @@ export default function Home() {
   const [template, setTemplate] = useState("");
   const [data, setData] = useState("{}");
   const [rendered, setRendered] = useState("");
-  const [error, setError] = useState<{ message: string; details?: string } | null>(null);
+  const [error, setError] = useState<{
+    message: string;
+    details?: string;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Debounced render function
@@ -67,7 +66,7 @@ export default function Home() {
         setIsLoading(false);
       }
     },
-    []
+    [],
   );
 
   // Debounce the render function
@@ -149,7 +148,7 @@ export default function Home() {
 
       {/* Main Content - Resizable Panels */}
       <div className="flex-1 overflow-hidden">
-        <Group direction="horizontal" className="h-full">
+        <Group orientation="horizontal" className="h-full">
           {/* EJS Template Panel */}
           <Panel defaultSize={33} minSize={20}>
             <div className="flex h-full flex-col">
